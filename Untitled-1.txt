@@ -1,0 +1,69 @@
+genericbeat:
+  auth_type: oauth20
+  beatIdentifier: 52b_WD_OAuth
+  content_type: application/x-www-form-urlencoded  
+  cursor_header_type: custom_header
+  filter_type: nofilter
+  headers: {}
+  heartbeatdisabled: false
+  heartbeatinterval: 60
+  logsource_name: WD-OAuth2
+  oauth20_auth:
+    access_token_field: access_token
+    access_token_format: jsonkey
+    auth_append_field: Bearer
+    auth_header_field: Authorization
+    body: ""
+    body_param:
+      client_id: YzIyNjhkZmItODk2NS00N2UwLWE1YjQtNTNjYzc4OTQwNWJj
+      client_secret: rqwxl0jpjho883ynuiu3i4e42delovbjb2oqccz3i65vwa9ktfglwdhipdsj7trjc7o2r69o141zo57mdfirx3ocpekug4atkp8  
+      grant_type: authorization_code
+    content_type: application/x-www-form-urlencoded
+    headers: {}
+    method: POST 
+    params: {}
+    url: https://www.myworkday.com/rivhs/authorize 
+  pagination_type: nopagination
+  params:
+    from: 2023-07-20T06%3A15%3A00Z
+    taskId: 03f043df676e40cfad46bc576f89b07f
+    to: 2023-07-23T06%3A15%3A00Z
+  period: 60s
+  postBody: []
+  request_method: GET
+  response_field: data
+  response_field_flag: "true"
+  sorting_enabled: false
+  time_format: 2006-01-02T15:04:05Z07:00
+  url: https://services1.myworkday.com/api/privacy/v1/rivhs/activityLogging
+logging.level: debug
+logging.metrics.enabled: false
+logging.to_stderr: true
+output:
+  logstash:
+    backoff.init: 1
+    backoff.max: 60
+    bulk_max_size: 2048
+    compression_level: 3
+    hosts:
+    - open_collector:5044
+    loadbalance: false
+    pipelining: 2
+    slow_start: false
+    timeout: 30
+    ttl: 0
+queue:
+  spool:
+    file:
+      page_size: 4KiB
+      path: ${path.data}/spool.dat
+      permissions: 384
+      prealloc: true
+      size: 100MiB
+    read:
+      flush.timeout: 0s
+    write:
+      buffer_size: 1MiB
+      codec: cbor
+      flush.events: 16384
+      flush.timeout: 1s
